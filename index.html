@@ -14,8 +14,11 @@
     <main class="container">
         <header class="header">
             <h2>TIC - TAC - TOE</h2><br>
-            <p>Select opponent: <span><button id="cpu-opponent">CPU</button><button id="human-opponent">HUMAN</button>
-            </span><br><br></p><br><p>You are Player 1<br><span id="p1">Player 1: 0</span> ---- vs. ---- <span id="p2">Player 2: 0</span></p>
+            <p id="select-opponent">Select opponent: <span><button id="cpu-opponent">CPU</button><button id="human-opponent">HUMAN</button><br><br>
+            <p id="cpu-game"><label for="1pcname">1P name </label><input type="text" id="1pcname" name="1pcname" maxlength="12"></p>
+            <p id="human-game"><label for="1pname">1P name </label><input type="text" id="1pname" name="1pname" maxlength="12">
+                               <label for="2pname">2P name </label><input type="text" id="2pname" name="2pname" maxlength="12"></p>
+            <br><p id="p-start-game"><button id="start-game">START</button></p>
         </header>
         <section class="gamegrid" id="game-grid">
             <div class="square" id="0"></div>
@@ -28,6 +31,11 @@
             <div class="square" id="7"></div>
             <div class="square" id="8"></div>
         </section>
+        <footer class="header" id="footer">
+            <h2>THE WINNER IS:</h2>
+            <h1 id="winner-text"></h1><br>
+            <p><button id="new-round">NEW ROUND</button><button id="new-match">RESTART</button></p>            
+        </footer>               
     </main>
     <script src=".\scripts.js"></script>
 </body>
