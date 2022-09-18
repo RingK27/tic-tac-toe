@@ -111,30 +111,52 @@ const playerFactory = (identity) => {
 
 const gameController = (() => {
     let turn = 0;
+    let circleWinner = 'circle';
+    let crossWinner = 'cross';
     const checkWin = () => {        
         let board = gameBoard.board;
-        if (board[0] == board[1] && board[1] == board[2] && board[0] != '') {
-            footer.style.display = 'block';
-            winnerText.innerText = p1 + ", CONGRATULATIONS!!!"
-        } else if (board[3] == board[4] && board[4] == board[5] && board[3] != '') {
-            console.log(board[3]);
-        } else if (board[6] == board[7] && board[7] == board[8] && board[6] != '') {
-            console.log(board[6]);
-        } else if (board[0] == board[3] && board[3] == board[6] && board[0] != '') {
-            console.log(board[0]);
-        } else if (board[1] == board[4] && board[4] == board[7] && board[1] != '') {
-            console.log(board[1]);
-        } else if (board[2] == board[5] && board[5] == board[8] && board[2] != '') {
-            console.log(board[2]);
-        } else if (board[0] == board[4] && board[4] == board[8] && board[0] != '') {
-            console.log(board[0]);
-        } else if (board[2] == board[4] && board[4] == board[6] && board[2] != '') {
-            console.log(board[2]);
-        } else {
-            if (turn == 9) {
-                console.log('draw');
-            }
+        for (let i = 0; i < board.length; i += 3) {                        
+            if (board[i] != '' && board[i] == board[i+1] && board[i+1] == board[i+2]) {
+                if (board[i].indexOf(circleWinner) !== -1) {
+                    winnerText.innerText = p1 + ", CONGRATULATIONS!!!"
+                } else {
+                    winnerText.innerText = p2 + ", CONGRATULATIONS!!!"
+                }
+                footer.style.display = 'block';
+                gameBoard.stopGame();                    
+            }            
         }
+        for (let i = 0; i < board.length; i++) {                        
+            if (board[i] != '' && board[i] == board[i+3] && board[i+3] == board[i+6]) {
+                if (board[i].indexOf(circleWinner) !== -1) {
+                    winnerText.innerText = p1 + ", CONGRATULATIONS!!!"
+                } else {
+                    winnerText.innerText = p2 + ", CONGRATULATIONS!!!"
+                }
+                footer.style.display = 'block';
+                gameBoard.stopGame();                     
+            }            
+        }
+        if (board[0] == board[4] && board[4] == board[8]) {
+            if (board[0].indexOf(circleWinner) !== -1) {
+                winnerText.innerText = p1 + ", CONGRATULATIONS!!!"
+            } else {
+                winnerText.innerText = p2 + ", CONGRATULATIONS!!!"
+            }
+            footer.style.display = 'block';
+            gameBoard.stopGame(); 
+        } else if (board[2] == board[4] && board[4] == board[6]){
+            if (board[2].indexOf(circleWinner) !== -1) {
+                winnerText.innerText = p1 + ", CONGRATULATIONS!!!"
+            } else {
+                winnerText.innerText = p2 + ", CONGRATULATIONS!!!"
+            }
+            footer.style.display = 'block';
+            gameBoard.stopGame(); 
+        }      
+        
+        let newRound = document.getElementById('new-match');
+        newRound.addEventListener('click', gameBoard.restart);
     }
     return {
         turn,
@@ -143,16 +165,24 @@ const gameController = (() => {
 })();
 
 const gameBoard = (() => {       
-    let board = ['','','','','','','','',''];
+    let board = ['','','','','','','','',''];    
     const drawBoard = ([]) => {
         for (let i = 0; i < 9; i++) {
             squares[i].innerHTML = board[i];
         }
     } 
-    const clearBoard = () => console.log('board cleared');
+    const restart = () => {
+        location.reload();
+    }
+    const stopGame = () => {
+        for(let i = 0; i < squares.length; i++) {
+            squares[i].replaceWith(squares[i].cloneNode(true));
+        }
+    }
     return {        
         board,
         drawBoard,
-        clearBoard,               
+        stopGame,
+        restart,               
     };
 })();
